@@ -1,0 +1,36 @@
+{
+  "tests": [{
+    "id": "google_index_page",
+    "preActions": [
+      {
+        "$set": {
+          "start": {
+            "$now": { "inUTC": true }
+          }
+        }
+      }
+    ],
+    "postActions": [
+      {
+        "$set": {
+          "stop": {
+            "$now": { "inUTC": true }
+          }
+        }
+      },
+      {
+        "$graphite": ""
+      }
+    ],
+    "request": {
+      "method": "GET",
+      "protocol": "http",
+      "host": "www.google.com",
+      "resource": "/index.html"
+    },
+    "expectedResponse": {
+      "statusCode": 200,
+      "responseTime": { "$lte": 1000 }
+    }
+  }]
+}
